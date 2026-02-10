@@ -131,7 +131,8 @@
       placeholder="Detalles adicionales (opcional)"
     ></textarea>
 
-    <button type="submit">Guardar</button>
+    <!-- PARCHE: importante que NO sea submit si más adelante lo usás como botón de navegación -->
+    <button id="btnGuardarOfrenda" type="submit">Guardar</button>
 
     <div id="status" class="status"></div>
   </form>
@@ -141,6 +142,16 @@
 
   const form = document.getElementById('ofrendaForm');
   const statusEl = document.getElementById('status');
+
+  // PARCHE EXTRA (seguro): si por alguna razón el listener se pierde, al menos confirma que el submit está vivo
+  document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("btnGuardarOfrenda");
+    if (btn && btn.tagName.toLowerCase() === "button") {
+      // Mantiene submit porque este formulario sí guarda
+      // (no lo cambiamos a button para no romper el flujo actual)
+      console.log("Botón Guardar listo.");
+    }
+  });
 
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -193,5 +204,3 @@
 </script>
 </body>
 </html>
-
-
